@@ -1,0 +1,41 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/User/MasterPage.master" AutoEventWireup="true" CodeFile="AddPlace.aspx.cs" Inherits="User_AddPlace" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server"></asp:ToolkitScriptManager>
+    
+    <div id="addarticle" style="width:900px;height:540px;margin:0 auto;border:2px solid #e2face;">
+        <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:ListItem Selected="True" Value="境内"></asp:ListItem>
+            <asp:ListItem Value="境外"></asp:ListItem>
+        </asp:DropDownList>
+        <div id="t_title" style=" margin:0 auto; width:300px;">
+            <asp:TextBox ID="biaoti" runat="server" placeholder="请输入目的地" />
+        </div>
+        <div id="t_content" style="width:898px;height:400px;margin:0 auto;margin-top:5px;">
+            <%--<cc1:Editor ID="Editor1" runat="server" />--%>
+             <asp:TextBox ID="Editor1" runat="server" placeholder="请简单介绍目的地" Width="890px" Height="398px" TextMode="multiLine"/>
+        </div>
+       
+        <div id="art_illustration" style="margin:0 auto;margin-top:5px; width:300px;height:30px;">
+           选择插图:  <asp:FileUpload ID="FileUpload1" runat="server" />
+        </div>
+        <div id="btn" style="margin:0 auto;width:50px; height:50px">
+            <asp:Button ID="sure" Text="确定" runat="server" OnClick="sure_Click" />
+        </div>
+        <input type="hidden" id="neirong" value="" runat="server">
+        
+        <script>
+            document.getElementById("neirong").value = document.getElementById("Editor1").value;
+        </script>
+    </div>
+
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder3" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+</asp:Content>
+

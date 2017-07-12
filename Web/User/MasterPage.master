@@ -1,0 +1,212 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="User_MasterPage" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="../js/jquery-2.0.2.js"></script>
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/MasterPageStyle2.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+        $(function () {
+            // 导航
+            $(".nav>ul>li").mouseenter(function (event) {
+                $(this).addClass("cur").siblings().removeClass("cur")
+                $(this).children(".yincang").stop().slideDown()
+
+            });
+            $(".nav>ul>li").mouseleave(function (event) {
+                $(this).removeClass("cur")
+                $(this).children(".yincang").stop().slideUp()
+            });
+            // 特价
+            $(".tejia .wenzi span").mouseenter(function (event) {
+                $(this).addClass("cur").siblings().removeClass("cur")
+            });
+            // 品牌目的地
+            $(".pinpai_inr ul li").mouseenter(function (event) {
+                $(this).addClass("cur").siblings().removeClass("cur")
+            });
+            $(".pinpai_inr ul li").mouseleave(function (event) {
+                $(".pinpai_inr ul li").removeClass("cur")
+            });
+            // 
+            $(".tututu").mouseenter(function (event) {
+                $(this).children(".heibu").stop().slideDown()
+            });
+            $(".tututu").mouseleave(function (event) {
+                $(this).children(".heibu").stop().slideUp()
+            });
+            //banner
+            var nowing = 0
+            var $imglis = $(".banner .list0 li")
+            var $fadeCover = $(".fadeCover")
+            var fadeIntime = 500
+            var fadeOutime = 800
+            var $circle = $(".circle li")
+            var timer
+
+            // 定义函数
+            function rightbtn() {
+                // 先信号量的改变，
+
+                nowing++
+                if (nowing > $imglis.length - 1) {
+                    nowing = 0
+                }
+                // 再调用函数
+                dong();
+            }
+            // 定时器业务
+            timer = setInterval(rightbtn, 2000)
+            $(".banner").mouseenter(function () {
+                clearInterval(timer)
+
+            })
+            $(".banner").mouseleave(function () {
+                clearInterval(timer)
+                timer = setInterval(rightbtn, 2000)
+            })
+            // 点击小圆点业务
+            $circle.click(function () {
+                nowing = $(this).index()
+                dong()
+            })
+            function dong() {
+                // 先让fadecover淡入，让全局变白 
+                $fadeCover.fadeIn(fadeIntime, function () {
+                    // ,function(){
+                    // 回调函数中，就表示fadecover淡入后做的事情。
+                    // 换图是干蹦的，不是淡入淡出的换,进行暗箱操作，兄弟去cur，自己加cur
+                    $imglis.eq(nowing).addClass('cur').siblings().removeClass('cur')
+                    // 淡出让黑布小事
+                    $(this).fadeOut(fadeOutime)
+                })
+                $circle.eq(nowing).addClass("cur").siblings().removeClass("cur")
+            }
+
+        })
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div>
+                <!--head层-->
+                <div class="header1">
+                    <div class="header1-in">
+                        <div class="logo">
+                            <a href="../img/logo.jpg">
+                                <img src="../img/logo.jpg" alt="说行就行，随行" /></a>
+                        </div>
+                        <div class="search">
+                            <div class="search-left">搜索目的地</div>
+                            <div class="search-center">
+                                <input type="text" class="text1" placeholder="邂逅慵懒的小时光" />
+                            </div>
+                            <div class="search-right"></div>
+                        </div>
+
+
+                        <div class="zuce">
+                          <%-- <iframe src="Music.html"></iframe>--%>
+                            <audio src="../res/朴树 - 平凡之路.mp3" autoplay="autoplay"></audio>
+                            <%-- <asp:Label Text="登录|注册" runat="server"/>--%>
+                            <a>
+                                <asp:Button ID="lab_denglu" Text="登录" runat="server" OnClick="lab_denglu_Click" />
+                                <%-- <input type="button" value="登录" id="lab_denglu" />--%>
+                            </a>&nbsp
+                        <a>
+                            <%--<input type="button" value="注册" id="lab_zhuce" />--%>
+                            <asp:Button ID="lab_zhuce" Text="注册" runat="server" OnClick="lab_zhuce_Click" />
+
+                        </a>&nbsp
+                          <a>
+                              <asp:Button Text="注销" ID="lab_loginoff" runat="server" OnClick="lab_loginoff_Click" />
+                          </a>
+                           
+                        </div>
+                    </div>
+                </div>
+                <!--head层结束-->
+
+                <!--nav层-->
+                <div class="nav">
+                    <ul class="ul1">
+                        <li class="level1 cur first"><a class="a1" href='<%=ResolveUrl("Index.aspx") %>'>首页</a></li>
+
+                        <li class="level1"><a class="a1" href="#">目的地</a>
+                            <ul class="yincang">
+                                <li><a href="Index.aspx">境内游</a></li>
+                                <li><a href="Index.aspx">境外游</a></li>
+                                <li><a href="AddPlace.aspx">创建目的地</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="level1"><a class="a1" href='<%=ResolveUrl("DriveTravel.aspx") %>'>自驾游</a>
+
+                        </li>
+                        <li class="level1"><a class="a1" href='<%=ResolveUrl("Route.aspx") %>'>创建行程</a></li>
+
+
+
+                        <li class="level1"><a class="a1" href='<%=ResolveUrl("Article.aspx") %>'>游记</a>
+
+                        </li>
+                        <li class="level1"><a class="a1" href='<%=ResolveUrl("Personal_Detail.aspx") %>'>个人中心</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!--nav层结束-->
+
+                <!--Content-->
+                <div id="content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <!---->
+
+                <!--foot层-->
+                <div class="footer">
+                    <div class="navfoot">
+                        <ul>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">营销服务</a></li>
+                            <li><a href="#">商家服务</a></li>
+                            <li><a href="#">新手上路</a></li>
+                            <li><a href="#">合作伙伴</a></li>
+                            <li><a href="#">关注我们</a></li>
+                        </ul>
+                    </div>
+                    <div class="share">
+                        <span class="s1"></span>
+                        <span class="s2"></span>
+                        <span class="s3"></span>
+                        <span class="s4"></span>
+                    </div>
+                    <div class="cl"></div>
+                    <p>版权所有&copy;2015 FREE TRAVEL 蒋浩背包客有限公司</p>
+                    <p>川ICP备11011333号 川公网安备110105007294</p>
+                </div>
+                <!--foot层结束-->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
